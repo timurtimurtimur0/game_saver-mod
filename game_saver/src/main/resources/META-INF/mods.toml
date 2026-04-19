@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+[[mods]]
+modId="game_saver"
+version="1.0"
+displayName="Game Saver"
+logoFile="icon.png"
+
+authors="timurtimurtimur0"
+description='''En: This mod lets you save your game using a lamp.
+ When you respawn, any resources, mobs, or blocks that have changed since
+ you saved will be restored. I hope this mod comes in handy for campaign maps
+ or even survival mode. I created this mod for a modpack I am working on with a friend.
+
+ Ru: Этот мод позволит сохранять игру благодаря лампе. После возрождения к вам будут
+ возвращаться ресурсы, мобы и блоки что изменились после сохранения.
+ Надеюсь этот мод пригодиться для карт на прохождение или даже выживания.
+ Я создал этот мод для сборки что создаю вместе с другом.
+
+ Ua: Цей мод дозволить зберігати гру за допомогою лампи. Після відродження до вас повернуться ресурси,
+ моби та блоки, які змінилися після збереження. Сподіваюся, цей мод стане в нагоді для карт на проходження
+ або навіть виживання. Я створив цей мод для збірки, яку розробляю разом із другом.'''
+
+[[dependencies.game_saver]]
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+
