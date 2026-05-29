@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "lit=false": { "model": "game_saver:block/game_saver_off" },
+    "lit=true": { "model": "game_saver:block/game_saver_on" }
+  }
+}

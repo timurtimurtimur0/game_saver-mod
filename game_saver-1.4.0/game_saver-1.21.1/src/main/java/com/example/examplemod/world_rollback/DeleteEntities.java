@@ -1,0 +1,44 @@
+package com.example.examplemod.world_rollback;
+
+import com.example.examplemod.Game_Saver;
+import com.example.examplemod.world_changes.LevelRewindData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+
+@EventBusSubscriber(modid = Game_Saver.MODID)
+public class DeleteEntities {
+
+    @SubscribeEvent
+    public static void onEntityJoin(EntityJoinLevelEvent event) {
+
+        if (!event.getLevel().isClientSide() && event.getLevel() instanceof ServerLevel serverLevel) {
+            Entity entity = event.getEntity();
+            LevelRewindData data = LevelRewindData.get(serverLevel);
+
+            if (data.getGlobalSaverPos() != null && !(entity instanceof Player)) {
+
+                // Kills mobs that spawned from loaded chunks after a rollback
+                if (data.shouldDelete(entity.getUUID())) {
+                    event.setCanceled(true); // Bans spawning
+                    return;
+                }
+
+                // Monitors new spawns
+                if (!event.loadedFromDisk() && !entity.getTags().contains("rewind_revived")) {
+                    if (!(entity instanceof AbstractArrow) && !(entity instanceof PrimedTnt)
+                            &&!(entity instanceof ExperienceOrb)) {
+
+                        data.logNewSpawn(entity.getUUID());
+                    }
+                }
+            }
+        }
+    }
+}
